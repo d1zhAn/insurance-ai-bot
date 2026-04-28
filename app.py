@@ -2,7 +2,8 @@ import streamlit as st
 import os
 import re
 from docx import Document
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document as LCDocument
 
@@ -38,7 +39,7 @@ if google_api_key:
             st.error("Не удалось загрузить ни одного документа")
             return None
         try:
-            embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-2-preview")
+            embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
             vectorstore = FAISS.from_documents(all_docs, embeddings)
             return vectorstore
         except Exception as e:
