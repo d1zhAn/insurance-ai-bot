@@ -113,7 +113,7 @@ def create_vectorstore(_docs):
 
 vectorstore = create_vectorstore(all_docs)
 
-llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0)
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
 
 SYSTEM_PROMPT = f"""Ты — высококвалифицированный юрист-эксперт по страховому законодательству Республики Казахстан.
 Твоя задача — давать точные и юридически корректные ответы СОГЛАСНО ПРЕДОСТАВЛЕННОМУ КОНТЕКСТУ.
