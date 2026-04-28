@@ -92,7 +92,6 @@ if not all_docs:
 
 @st.cache_resource
 def create_vectorstore(_docs):
-    # Новая мультиязычная модель
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     )
@@ -136,21 +135,7 @@ if prompt := st.chat_input("Задайте вопрос по страховом�
     with st.chat_message("assistant"):
         with st.spinner("🔍 Анализирую законы..."):
             try:
-                # Поиск с увеличенным k
                 docs = vectorstore.similarity_search(prompt, k=10)
-
-                # --- Отладка в боковой панели ---
-                with st.sidebar:
-                    st.subheader("🔎 Отладка поиска")
-                    if docs:
-                        for i, d in enumerate(docs[:3], 1):
-                            src = d.metadata.get("source", "?")
-                            preview = d.page_content[:150].replace("\n", " ")
-                            st.caption(f"{i}. {src}")
-                            st.text(preview + ("..." if len(d.page_content)>150 else ""))
-                    else:
-                        st.warning("Ничего не найдено")
-                # --------------------------------
 
                 context = ""
                 for d in docs:
