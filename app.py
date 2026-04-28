@@ -51,7 +51,7 @@ if google_api_key:
         if vectorstore is None:
             st.stop()
 
-        llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash-latest", temperature=0)
+        llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", temperature=0)
 
         if "messages" not in st.session_state:
             st.session_state.messages = []
