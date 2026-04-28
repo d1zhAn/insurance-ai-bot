@@ -40,7 +40,9 @@ if google_api_key:
         
         if "memory" not in st.session_state:
             st.session_state.memory = ConversationBufferMemory(
-                memory_key="chat_history", return_messages=True, output_key='answer'
+                memory_key="chat_history",
+                return_messages=True,
+                output_key='answer'
             )
 
         llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
@@ -48,7 +50,8 @@ if google_api_key:
         qa_chain = ConversationalRetrievalChain.from_llm(
             llm=llm,
             retriever=vectorstore.as_retriever(search_kwargs={"k": 5}),
-            memory=st.session_state.memory
+            memory=st.session_state.memory,
+            verbose=True  
         )
 
         if "messages" not in st.session_state:
@@ -64,11 +67,22 @@ if google_api_key:
                 st.markdown(prompt)
 
             with st.chat_message("assistant"):
-                response = qa_chain.invoke({"question": prompt})
-                st.markdown(response["answer"])
-                st.session_state.messages.append({"role": "assistant", "content": response["answer"]})
+                with st.spinner("Готовлю ответ..."):
+                    response = qa_chain.invoke({"question": prompt})
+                    answer = response.get("answer", "Извините, не удалось получить ответ.")
+                    st.markdown(answer)
+                    st.session_state.messages.append({"role": "assistant", "content": answer})
 
     except Exception as e:
-        st.error(f"Произошла ошибка: {e}")
+        st.error(f"Произошла ошибка: {str(e)}")
+        st.error(f"Тип ошибки: {type(e).__name__}")
 else:
-    st.info("Пожалуйста, введите Google API Key в боковой панели, чтобы начать бесплатно.")
+    st.info("Пожалуйста, введите Google API Key в боковой панели, чтобы начать")
+    st.markdown("""
+    ### Как получить бесплатный API ключ:
+    1. Перейдите на [Google AI Studio](https://aistudio.google.com/apikey)
+    2. Нажмите "Create API Key"
+    3. Скопируйте ключ и вставьте его здесь
+    
+    **Бесплатный лимит:** 15 запросов в минуту
+    """)
