@@ -8,7 +8,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document as LCDocument
 from langchain_community.retrievers import BM25Retriever
-from langchain.retrievers import EnsembleRetriever
+from langchain.retrievers.ensemble import EnsembleRetriever
 from langchain_core.messages import SystemMessage, HumanMessage
 
 st.set_page_config(page_title="Страховой Ассистент РК", page_icon="🛡️")
