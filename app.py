@@ -38,7 +38,7 @@ if google_api_key:
             st.error("Не удалось загрузить ни одного документа")
             return None
         try:
-            embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+            embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
             vectorstore = FAISS.from_documents(all_docs, embeddings)
             return vectorstore
         except Exception as e:
