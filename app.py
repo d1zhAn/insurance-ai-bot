@@ -5,7 +5,6 @@ from docx import Document
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.chat_message_histories import StreamlitChatMessageHistory
-from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain_core.documents import Document as LCDocument
 import sys
